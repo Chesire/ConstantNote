@@ -1,0 +1,7 @@
+﻿Make a settings file, this should store all the data I.E what the selected files are. Or could use serialization to just keep the ViewModels set on relaunch.
+
+Improve GUI.
+
+Make right click menu items, to set new locations
+
+Make an array of text files, with each item that is selected add it to the list of tabs, when removed remove another
