@@ -1,7 +1,10 @@
-﻿Make a settings file, this should store all the data I.E what the selected files are. Or could use serialization to just keep the ViewModels set on relaunch.
+﻿Make a settings file, this should store all the data I.E what the selected files are. Or could use serialization to just keep the ViewModels set on relaunch
+Add serialization to load files back up when app starts.
 
 Improve GUI.
 
-Make right click menu items, to set new locations
+Add some sort of queueing for when it cannot save, so can try it after a few seconds.
 
-Make an array of text files, with each item that is selected add it to the list of tabs, when removed remove another
+Add a mechanic to save, instead of just on losing focus.
+
+Need a proper close button, instead of the minimal button.
