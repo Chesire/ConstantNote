@@ -1,9 +1,10 @@
 ﻿using System;
 using System.ComponentModel;
 using System.IO;
+using System.Runtime.Serialization;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Media.TextFormatting;
+using System.Windows.Input;
 using ConsantNote.Annotations;
 using ConstantNote.Resources;
 
@@ -12,7 +13,8 @@ namespace ConstantNote.Classes.View
     /// <summary>
     /// Interaction logic for TabItemView.xaml
     /// </summary>
-    public partial class TabItemView : TabItem , INotifyPropertyChanged
+    [Serializable]
+    public partial class TabItemView : TabItem , INotifyPropertyChanged, ISerializable
     {
         #region Members
         private bool _hasBeenEdited;
@@ -51,9 +53,24 @@ namespace ConstantNote.Classes.View
         #region Constructor
         public TabItemView(string filePath)
         {
+            Initialize(filePath);
+        }
+
+        public TabItemView(SerializationInfo info, StreamingContext ctxt)
+        {
+            Initialize((string)info.GetValue("FilePath", typeof(string)));
+        }
+
+        private void Initialize(string filePath)
+        {
             InitializeComponent();
             FilePath = filePath;
             SetupTabItem();
+        }
+
+        public void GetObjectData(SerializationInfo info, StreamingContext context)
+        {
+            info.AddValue("FilePath", FilePath);
         }
         #endregion
 
@@ -65,23 +82,14 @@ namespace ConstantNote.Classes.View
 
         private void TextFileBlock_OnLostFocus(object sender, RoutedEventArgs e)
         {
-            if (string.IsNullOrEmpty(FilePath)) return;
             if (!HasBeenEdited) return;
+            SaveItem();
+        }
 
-            try
-            {
-                using (var sw = File.CreateText(FilePath))
-                {
-                    sw.Write(TextFileBlock.Text);
-                    HasBeenEdited = false;
-                    Console.WriteLine("Saved");
-                }
-            }
-            catch (Exception ex)
-            {
-                // Need to store the file in a queue to write to, so eventually it goes through
-                Console.WriteLine(ex);
-            }
+        private void CrossImage_OnMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (!HasBeenEdited) return;
+            SaveItem();
         }
 
         private void ButtonBase_OnClick(object sender, RoutedEventArgs e)
@@ -98,6 +106,7 @@ namespace ConstantNote.Classes.View
             {
                 TextFileBlock.IsHitTestVisible = false;
                 TextFileBlock.Text = MainResource.Info;
+                HasBeenEdited = false;
                 CanClose = false;
                 return;
             }
@@ -105,6 +114,27 @@ namespace ConstantNote.Classes.View
             TextFileBlock.Text = File.ReadAllText(FilePath);
             HasBeenEdited = false;
             CanClose = true;
+        }
+
+        internal void SaveItem()
+        {
+            if (string.IsNullOrEmpty(FilePath)) return;
+            if (!HasBeenEdited) return;
+
+            try
+            {
+                using (var sw = File.CreateText(FilePath))
+                {
+                    sw.Write(TextFileBlock.Text);
+                }
+                HasBeenEdited = false;
+                Console.WriteLine(@"Saved");
+            }
+            catch (Exception ex)
+            {
+                // Need to store the file in a queue to write to, so eventually it goes through
+                Console.WriteLine(ex);
+            }
         }
 
         [NotifyPropertyChangedInvocator]

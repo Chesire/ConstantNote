@@ -15,7 +15,8 @@
             <Image Name="CrossImage" Height="15"
                    VerticalAlignment="Center" 
                    Source="../../Assets/cross.png"
-                   Visibility="{Binding HasBeenEdited, Converter={StaticResource CollapsedIfFalse}}"/>
+                   Visibility="{Binding HasBeenEdited, Converter={StaticResource CollapsedIfFalse}}"
+                   MouseDown="CrossImage_OnMouseDown"/>
             <TextBlock Name="HeaderTextBlock"/>
             <Button Height="10" 
                     Content="x"

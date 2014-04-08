@@ -61,6 +61,24 @@ namespace ConstantNote.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Application Height.
+        /// </summary>
+        internal static string Application_Height {
+            get {
+                return ResourceManager.GetString("Application_Height", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Application Width.
+        /// </summary>
+        internal static string Application_Width {
+            get {
+                return ResourceManager.GetString("Application_Width", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to To add  - Right click the tab bar and click &quot;Add file&quot; or &quot;Add folder&quot;
         ///To drag - Click and drag the primary tab
         ///To save  - Click out of the text box

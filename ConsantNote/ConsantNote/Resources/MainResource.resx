@@ -117,6 +117,12 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Application_Height" xml:space="preserve">
+    <value>Application Height</value>
+  </data>
+  <data name="Application_Width" xml:space="preserve">
+    <value>Application Width</value>
+  </data>
   <data name="Info" xml:space="preserve">
     <value>To add  - Right click the tab bar and click "Add file" or "Add folder"
 To drag - Click and drag the primary tab

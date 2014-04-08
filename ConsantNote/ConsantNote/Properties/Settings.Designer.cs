@@ -22,5 +22,41 @@ namespace ConstantNote.Properties {
                 return defaultInstance;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("350")]
+        public int ApplicationHeight {
+            get {
+                return ((int)(this["ApplicationHeight"]));
+            }
+            set {
+                this["ApplicationHeight"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("525")]
+        public int ApplicationWidth {
+            get {
+                return ((int)(this["ApplicationWidth"]));
+            }
+            set {
+                this["ApplicationWidth"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string StateLocation {
+            get {
+                return ((string)(this["StateLocation"]));
+            }
+            set {
+                this["StateLocation"] = value;
+            }
+        }
     }
 }

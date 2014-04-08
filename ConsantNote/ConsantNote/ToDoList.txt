@@ -1,10 +1,19 @@
-﻿Make a settings file, this should store all the data I.E what the selected files are. Or could use serialization to just keep the ViewModels set on relaunch
-Add serialization to load files back up when app starts.
-
-Improve GUI.
-
-Add some sort of queueing for when it cannot save, so can try it after a few seconds.
-
-Add a mechanic to save, instead of just on losing focus.
+﻿Add some sort of queueing for when it cannot save, so can try it after a few seconds.
 
 Need a proper close button, instead of the minimal button.
+
+Make it possible to open the note file.
+
+Make it possible to hide text. If below a tag (such as <ignore/>)
+
+Make it keep the same location on boot.
+
+Make it save on shutdown of the PC.
+
+Make it non minimizable
+
+Settings:
+	Add a setting to create startup shortcut.
+
+Create a Wix installer so the application can be installed - 
+	Installer should create a short cut in the startup menu - C:\Users\CurrentUser\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup : Win 8

@@ -1,15 +1,16 @@
 ﻿<Window x:Class="ConstantNote.Classes.View.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:viewModel="clr-namespace:ConstantNote.Classes.ViewModel"
-        Title="Constant Note" Height="350" Width="525"
+        Title="Constant Note" Height="{Binding Path=ApplicationHeight, UpdateSourceTrigger=PropertyChanged}" Width="{Binding ApplicationWidth}"
         Loaded="MainWindow_OnLoaded" MouseDown="Window_MouseDown" 
+        Closing="MainWindow_OnClosing" 
         MinWidth="50" MinHeight="50" 
         WindowStyle="None" ResizeMode="NoResize" Background="Snow">
+    <!--
     <Window.DataContext>
         <viewModel:MainWindowViewModel x:Name="Vm"/>
     </Window.DataContext>
-
+    -->
     <Grid>
         <TabControl ItemsSource="{Binding TabsCollection}"
                     SelectedIndex="{Binding SelectedIndex}"/>

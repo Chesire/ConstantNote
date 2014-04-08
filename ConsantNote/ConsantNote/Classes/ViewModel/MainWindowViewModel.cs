@@ -2,14 +2,15 @@
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
-using System.Threading;
+using System.Runtime.Serialization;
 using System.Windows;
 using ConstantNote.Classes.Controller;
 using ConstantNote.Classes.View;
 
 namespace ConstantNote.Classes.ViewModel
 {
-    public class MainWindowViewModel : ViewModelBase
+    [Serializable]
+    public class MainWindowViewModel : ViewModelBase, ISerializable
     {
         #region Members
         private ObservableCollection<TabItemView> _tabsCollection;
@@ -22,6 +23,10 @@ namespace ConstantNote.Classes.ViewModel
             TabsCollection = new ObservableCollection<TabItemView> { new TabItemView("") { Header = "" } };
         }
 
+        public MainWindowViewModel(SerializationInfo info, StreamingContext ctxt)
+        {
+            TabsCollection = (ObservableCollection<TabItemView>)info.GetValue("Items", typeof(ObservableCollection<TabItemView>));
+        }
         #endregion
 
         #region Properties
@@ -48,6 +53,15 @@ namespace ConstantNote.Classes.ViewModel
 
         #region Methods
         /// <summary>
+        /// Serialization Method
+        /// </summary>
+        /// <param name="info"></param>
+        /// <param name="ctxt"></param>
+        public void GetObjectData(SerializationInfo info, StreamingContext ctxt)
+        {
+            info.AddValue("Items", TabsCollection);
+        }
+        /// <summary>
         /// Select a new file to put into the list of tabs
         /// </summary>
         public void SelectNewFile()
@@ -71,6 +85,18 @@ namespace ConstantNote.Classes.ViewModel
                 {
                     AddNewFile(item);
                 }
+            }
+        }
+
+        /// <summary>
+        /// Save all notes
+        /// </summary>
+        public void SaveAll()
+        {
+            if (TabsCollection.Count < 2) return;
+            foreach (var item in TabsCollection)
+            {
+                item.SaveItem();
             }
         }
 
