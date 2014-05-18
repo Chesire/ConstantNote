@@ -26,6 +26,7 @@ namespace ConstantNote.Classes.ViewModel
         public MainWindowViewModel(SerializationInfo info, StreamingContext ctxt)
         {
             TabsCollection = (ObservableCollection<TabItemView>)info.GetValue("Items", typeof(ObservableCollection<TabItemView>));
+            SelectedIndex = (int) info.GetValue("SelectedIndex", typeof (int));
         }
         #endregion
 
@@ -60,6 +61,7 @@ namespace ConstantNote.Classes.ViewModel
         public void GetObjectData(SerializationInfo info, StreamingContext ctxt)
         {
             info.AddValue("Items", TabsCollection);
+            info.AddValue("SelectedIndex", SelectedIndex);
         }
         /// <summary>
         /// Select a new file to put into the list of tabs
