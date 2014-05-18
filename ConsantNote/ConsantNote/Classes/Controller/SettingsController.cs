@@ -33,6 +33,24 @@ namespace ConstantNote.Classes.Controller
             }
         }
 
+        static internal double ApplicationLeft
+        {
+            get { return Settings.Default.ApplicationLeft; }
+            set
+            {
+                Settings.Default.ApplicationLeft= value;
+            }
+        }
+
+        static internal double ApplicationTop
+        {
+            get { return Settings.Default.ApplicationTop; }
+            set
+            {
+                Settings.Default.ApplicationTop= value;
+            }
+        }
+
         static internal void Save()
         {
             Settings.Default.Save();

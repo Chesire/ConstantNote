@@ -29,6 +29,8 @@ namespace ConstantNote.Classes.View
         public MainWindow()
         {
             InitializeComponent();
+            Left = SettingsController.ApplicationLeft;
+            Top = SettingsController.ApplicationTop;
             Console.WriteLine(SettingsController.StateLocation);
             ManageDeserialization();
 
@@ -48,6 +50,8 @@ namespace ConstantNote.Classes.View
         private void UIElement_OnMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             DragMove();
+            SettingsController.ApplicationLeft = Left;
+            SettingsController.ApplicationTop = Top;
         }
 
         private void MainWindow_OnLoaded(object sender, RoutedEventArgs e)
@@ -57,9 +61,11 @@ namespace ConstantNote.Classes.View
 
         private void MainWindow_OnClosing(object sender, CancelEventArgs e)
         {
+            e.Cancel = true;
             Serializer.Serialize(GetSaveLocation(), _vm);
             SettingsController.ApplicationDimensionsChanged -= ApplicationDimensionsChanged;
             SettingsController.Save();
+            e.Cancel = false;
         }
         #endregion
 
