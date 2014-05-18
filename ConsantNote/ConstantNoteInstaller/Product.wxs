@@ -14,6 +14,7 @@
       <UIRef Id="WixUI_Minimal"/>
     </UI>
 
+    <Property Id="ASSISTANCE_START_VIA_REGISTRY">1</Property>
     <!--<Property Id="ARPPRODUCTICON" Value="ProductIcon"/>-->
     <Property Id="ARPNOREPAIR" Value="yes" Secure="yes" />
     <Property Id="CONSTANTFOLDER">
@@ -40,6 +41,7 @@
       <ComponentRef Id='Com_ConstantFolder'/>
       <ComponentRef Id='Com_ConstantRemoveables'/>
       <ComponentRef Id='Com_RegCreateHKCU'/>
+      <ComponentRef Id="AutostartApp" />
     </Feature>
 
     <DirectoryRef Id='INSTALLFOLDER'>
@@ -75,12 +77,22 @@
                              GenericWrite="yes"/>
         </RegistryKey>
       </Component>
+
+      <!-- Auto-start via Registry -->
+      <Component Id="AutostartApp" Guid="{276940EF-B1F2-401A-95FD-1DF702C96BBF}">
+        <RegistryValue Id="ConNt.rst" Root="HKCU" Action="write"
+                       Key="Software\Microsoft\Windows\CurrentVersion\Run"
+                       Name="ConstantNote"
+                       Value="[INSTALLFOLDER]ConstantNote.exe"
+                       Type="string" />
+        <Condition>ASSISTANCE_START_VIA_REGISTRY</Condition>
+      </Component>
     </DirectoryRef>
 
     <DirectoryRef Id="CONSTANTFOLDER">
       <Component Id='Com_ConstantFolder' Guid="{DCBA494E-DE8E-4118-9B54-76DFCBEC62E1}">
         <RegistryKey Root="HKCU" Key="Software\ConstantNote">
-          <RegistryValue Name="InstallLocation" Type="string" Value="[CONSTANTFOLDER]" Action="write" KeyPath="yes"/>
+          <RegistryValue Name="AppDataFolder" Type="string" Value="[CONSTANTFOLDER]" Action="write" KeyPath="yes"/>
         </RegistryKey>
         <RemoveFolder Id="removeFolderDummyID" On="uninstall"/>
         <util:RemoveFolderEx Id='RemoveInstallationFolder' On="uninstall" Property="CONSTANTFOLDER"/>
@@ -88,7 +100,7 @@
 
       <Component Id='Com_ConstantRemoveables' Guid="{D94886AC-04A0-4F13-90B0-6CC4C677118C}">
         <RegistryKey Root="HKCU" Key="Software\ConstantNote">
-          <RegistryValue Name="InstallLocationRemoveables" Type="string" Value="[CONSTANTFOLDER]" Action="write" KeyPath="yes"/>
+          <RegistryValue Name="AppDataFolderRemove" Type="string" Value="[CONSTANTFOLDER]" Action="write" KeyPath="yes"/>
         </RegistryKey>
         <!--
         <File Id='cnLogo' Name='cnLogo.png' Source='cnLogo.png'/>
