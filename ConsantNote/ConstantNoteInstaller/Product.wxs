@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi"
+     xmlns:util="http://schemas.microsoft.com/wix/UtilExtension">
+  <Product Id="*" Name="ConstantNote" 
+           Language="1033" 
+           Version="1.0.0.0" 
+           Manufacturer="Chesire" 
+           UpgradeCode="3199413e-be76-4669-b7a7-e73d2e6ea066">
+    <Package InstallerVersion="200" 
+             Compressed="yes" 
+             InstallScope="perMachine" />
+    
+    <!--<Property Id="ARPPRODUCTICON" Value="ProductIcon"/>-->
+    <Property Id="ARPNOREPAIR" Value="yes" Secure="yes" />
+    <Property Id="ARPNOMODIFY" Value="yes" Secure="yes" />
+    <Property Id="CONSTANTFOLDER">
+      <RegistrySearch Root="HKCU" Key="Software\ConstantNote" Type="raw" Id="InstallationDirectoryRegistrySearch" Name="InstallLocation"/>
+    </Property>
+
+    <MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
+    <Media Id="1" Cabinet="Media1.cab" EmbedCab="yes"/>
+    <!--<Icon Id="ProductIcon" SourceFile="iconfile.ico"/>-->
+
+    <Directory Id="TARGETDIR" Name="SourceDir">
+      <Directory Id="ProgramFilesFolder">
+        <Directory Id="INSTALLFOLDER" Name="ConstantNote" />
+      </Directory>
+      <Directory Id="AppDataFolder" Name="AppDataFolder">
+        <Directory Id="CONSTANTFOLDER" Name="ConstantNote"/>
+      </Directory>
+    </Directory>
+    
+    <Feature Id="ProductFeature" Title="Main" Level="1">
+      <ComponentRef Id='Com_MainExe'/>
+      <ComponentRef Id='Com_ApiCodePack'/>
+      <ComponentRef Id='Com_ApiCodePackShell'/>
+      <ComponentRef Id='Com_ConstantFolder'/>
+      <ComponentRef Id='Com_ConstantRemoveables'/>
+      <ComponentRef Id='Com_RegCreateHKCU'/>
+    </Feature>
+
+    <DirectoryRef Id='INSTALLFOLDER'>
+      <Component Id='Com_MainExe' Guid='{93B9B2ED-4B78-4966-BE5B-B96458109746}'>
+        <File Id='NoteEXE'
+              Name='ConstantNote.exe'
+              Source='..\ConsantNote\bin\release\ConstantNote.exe'
+              KeyPath='yes'/>
+      </Component>
+      <Component Id='Com_ApiCodePack' Guid='{53AA895D-1635-485A-8375-28F9EA537D57}'>
+        <File Id='CodePackDLL'
+              Name='Microsoft.WindowsAPICodePack.dll'
+              Source='..\ConsantNote\bin\release\Microsoft.WindowsAPICodePack.dll'
+              KeyPath='yes'/>
+      </Component>
+      <Component Id='Com_ApiCodePackShell' Guid='{A3D8AB0A-5711-4F0E-AC56-72795534FBBD}'>
+        <File Id='CodePackShellDLL'
+              Name='Microsoft.WindowsAPICodePack.Shell.dll'
+              Source='..\ConsantNote\bin\release\Microsoft.WindowsAPICodePack.Shell.dll'
+              KeyPath='yes'/>
+      </Component>
+      <Component Id="Com_RegCreateHKCU">
+        <RegistryKey ForceCreateOnInstall='yes'
+                     ForceDeleteOnUninstall='yes'
+                     Id='CnHkcu'
+                     Root='HKCU'
+                     Key="Software\ConstantNote">
+          <RegistryValue Id="Installed"
+                         Value="1"
+                         Type="integer"
+                         KeyPath="no"/>
+          <util:PermissionEx User="Everyone"
+                             GenericWrite="yes"/>
+        </RegistryKey>
+      </Component>
+    </DirectoryRef>
+
+    <DirectoryRef Id="CONSTANTFOLDER">
+      <Component Id='Com_ConstantFolder' Guid="{DCBA494E-DE8E-4118-9B54-76DFCBEC62E1}">
+        <RegistryKey Root="HKCU" Key="Software\ConstantNote">
+          <RegistryValue Name="InstallLocation" Type="string" Value="[CONSTANTFOLDER]" Action="write" KeyPath="yes"/>
+        </RegistryKey>
+        <RemoveFolder Id="removeFolderDummyID" On="uninstall"/>
+        <util:RemoveFolderEx Id='RemoveInstallationFolder' On="uninstall" Property="CONSTANTFOLDER"/>
+      </Component>
+      
+      <Component Id='Com_ConstantRemoveables' Guid="{D94886AC-04A0-4F13-90B0-6CC4C677118C}">
+        <RegistryKey Root="HKCU" Key="Software\ConstantNote">
+          <RegistryValue Name="InstallLocationRemoveables" Type="string" Value="[CONSTANTFOLDER]" Action="write" KeyPath="yes"/>
+        </RegistryKey>
+        <!--
+        <File Id='cnLogo' Name='cnLogo.png' Source='cnLogo.png'/>
+        <RemoveFile Id='cnLogoRef' Name='cnLogo.png' On='uninstall'/>
+        -->
+      </Component>
+    </DirectoryRef>
+  </Product>
+</Wix>
