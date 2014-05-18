@@ -1,22 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi"
      xmlns:util="http://schemas.microsoft.com/wix/UtilExtension">
-  <Product Id="*" Name="ConstantNote" 
-           Language="1033" 
-           Version="1.0.0.0" 
-           Manufacturer="Chesire" 
+  <Product Id="*" Name="ConstantNote"
+           Language="1033"
+           Version="1.0.0.0"
+           Manufacturer="Chesire"
            UpgradeCode="3199413e-be76-4669-b7a7-e73d2e6ea066">
-    <Package InstallerVersion="200" 
-             Compressed="yes" 
+    <Package InstallerVersion="200"
+             Compressed="yes"
              InstallScope="perMachine" />
-    
+
+    <UI>
+      <UIRef Id="WixUI_Minimal"/>
+    </UI>
+
     <!--<Property Id="ARPPRODUCTICON" Value="ProductIcon"/>-->
     <Property Id="ARPNOREPAIR" Value="yes" Secure="yes" />
-    <Property Id="ARPNOMODIFY" Value="yes" Secure="yes" />
     <Property Id="CONSTANTFOLDER">
       <RegistrySearch Root="HKCU" Key="Software\ConstantNote" Type="raw" Id="InstallationDirectoryRegistrySearch" Name="InstallLocation"/>
     </Property>
-
+    
     <MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
     <Media Id="1" Cabinet="Media1.cab" EmbedCab="yes"/>
     <!--<Icon Id="ProductIcon" SourceFile="iconfile.ico"/>-->
@@ -29,7 +32,7 @@
         <Directory Id="CONSTANTFOLDER" Name="ConstantNote"/>
       </Directory>
     </Directory>
-    
+
     <Feature Id="ProductFeature" Title="Main" Level="1">
       <ComponentRef Id='Com_MainExe'/>
       <ComponentRef Id='Com_ApiCodePack'/>
@@ -82,7 +85,7 @@
         <RemoveFolder Id="removeFolderDummyID" On="uninstall"/>
         <util:RemoveFolderEx Id='RemoveInstallationFolder' On="uninstall" Property="CONSTANTFOLDER"/>
       </Component>
-      
+
       <Component Id='Com_ConstantRemoveables' Guid="{D94886AC-04A0-4F13-90B0-6CC4C677118C}">
         <RegistryKey Root="HKCU" Key="Software\ConstantNote">
           <RegistryValue Name="InstallLocationRemoveables" Type="string" Value="[CONSTANTFOLDER]" Action="write" KeyPath="yes"/>
