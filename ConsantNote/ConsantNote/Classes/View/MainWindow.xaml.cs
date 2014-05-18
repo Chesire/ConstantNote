@@ -89,11 +89,14 @@ namespace ConstantNote.Classes.View
 
         private static string GetSaveLocation()
         {
-            string retvalue = "notes.srl";
+            string retvalue = "storedata.srl";
+
+            // Just default to AppData for now
+            SettingsController.StateLocation = string.Format(@"{0}\ConstantNote", Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)); 
             string settingsLocation = SettingsController.StateLocation;
-            if(!string.IsNullOrEmpty(settingsLocation))
+            if (!string.IsNullOrEmpty(settingsLocation))
             {
-                retvalue = string.Format(@"{0}\notes.srl", settingsLocation);
+                retvalue = string.Format(@"{0}\storedata.srl", settingsLocation);
             }
 
             return retvalue;

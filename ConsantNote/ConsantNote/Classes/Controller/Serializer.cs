@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Security.Cryptography;
 
@@ -8,6 +9,12 @@ namespace ConstantNote.Classes.Controller
     {
         static public void Serialize(string fileName, object objectToSerialize)
         {
+            string directory = fileName.Substring(0, fileName.LastIndexOf("\\", StringComparison.Ordinal));
+            if (!Directory.Exists(directory))
+            {
+                Directory.CreateDirectory(directory);
+            }
+
             BinaryFormatter binaryFormatter = new BinaryFormatter();
             DESCryptoServiceProvider des = new DESCryptoServiceProvider();
 
@@ -40,8 +47,8 @@ namespace ConstantNote.Classes.Controller
             using (Stream stream = File.Open(fileName, FileMode.Open))
             {
                 var cryptoStream = new CryptoStream(stream, des.CreateDecryptor(key, iv), CryptoStreamMode.Read);
-                objectName = binaryFormatter.Deserialize(cryptoStream);
 
+                objectName = binaryFormatter.Deserialize(cryptoStream);
                 cryptoStream.Close();
             }
 
