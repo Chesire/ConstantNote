@@ -86,17 +86,18 @@ namespace ConstantNote.Classes.View
             SaveItem();
         }
 
-        private void CrossImage_OnMouseDown(object sender, MouseButtonEventArgs e)
+        private void SaveImage_OnMouseDown(object sender, MouseButtonEventArgs e)
         {
             if (!HasBeenEdited) return;
             SaveItem();
         }
 
-        private void ButtonBase_OnClick(object sender, RoutedEventArgs e)
+        private void CrossImage_OnMouseDown(object sender, MouseButtonEventArgs e)
         {
-            if (CloseTabItem != null) 
+            if (CloseTabItem != null)
                 CloseTabItem(this, new EventArgs());
         }
+
         #endregion
 
         #region Methods

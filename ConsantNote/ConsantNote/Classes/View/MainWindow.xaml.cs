@@ -21,22 +21,23 @@ namespace ConstantNote.Classes.View
         private const Int32 _AddSettingsSysMenuID = 1004;
         #endregion
 
-        private readonly MainWindowViewModel _vm;
+        #region Members
+        private MainWindowViewModel _vm;
+        #endregion
 
+        #region Constructor
         public MainWindow()
         {
             InitializeComponent();
             Console.WriteLine(SettingsController.StateLocation);
-            object tempObject = Serializer.Deserialize(GetSaveLocation());
-            _vm = tempObject == null ? 
-                _vm = new MainWindowViewModel { UiDispatcher = Dispatcher } :
-                (MainWindowViewModel)Convert.ChangeType(tempObject, typeof(MainWindowViewModel));
+            ManageDeserialization();
 
-            DataContext = _vm;
             ApplicationDimensionsChanged(null, null);
             SettingsController.ApplicationDimensionsChanged += ApplicationDimensionsChanged;
         }
+        #endregion
 
+        #region Event Handlers
         private void ApplicationDimensionsChanged(object sender, EventArgs eventArgs)
         {
             Height = SettingsController.ApplicationHeight;
@@ -60,7 +61,9 @@ namespace ConstantNote.Classes.View
             SettingsController.ApplicationDimensionsChanged -= ApplicationDimensionsChanged;
             SettingsController.Save();
         }
-        
+        #endregion
+
+        #region Methods
         private void SetupMenuItems()
         {
             IntPtr systemMenuHandle = NativeMethods.GetSystemMenu(Handle, false);
@@ -89,6 +92,23 @@ namespace ConstantNote.Classes.View
 
             return retvalue;
         }
+
+        private void ManageDeserialization()
+        {
+            object tempObject = Serializer.Deserialize(GetSaveLocation());
+            if (tempObject == null)
+            {
+                _vm = new MainWindowViewModel {UiDispatcher = Dispatcher};
+            }
+            else
+            {
+                _vm = (MainWindowViewModel)Convert.ChangeType(tempObject, typeof(MainWindowViewModel));
+                _vm.HookIntoEvents();
+            }
+
+            DataContext = _vm;
+        }
+        #endregion
 
         #region System Menu Hooks
         private IntPtr Handle { get { return new WindowInteropHelper(this).Handle; } }

@@ -63,6 +63,7 @@ namespace ConstantNote.Classes.ViewModel
             info.AddValue("Items", TabsCollection);
             info.AddValue("SelectedIndex", SelectedIndex);
         }
+
         /// <summary>
         /// Select a new file to put into the list of tabs
         /// </summary>
@@ -99,6 +100,19 @@ namespace ConstantNote.Classes.ViewModel
             foreach (var item in TabsCollection)
             {
                 item.SaveItem();
+            }
+        }
+
+        /// <summary>
+        /// Sets back up all the events
+        /// </summary>
+        internal void HookIntoEvents()
+        {
+            if (TabsCollection == null) return;
+            foreach (var tab in TabsCollection)
+            {
+                if (tab == null) continue;
+                tab.CloseTabItem += NewTabItemOnCloseTabItem;
             }
         }
 

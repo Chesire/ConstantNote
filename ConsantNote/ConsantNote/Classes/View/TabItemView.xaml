@@ -12,16 +12,19 @@
     
     <TabItem.Header>
         <StackPanel Orientation="Horizontal">
-            <Image Name="CrossImage" Height="15"
+            <Image Height="13"
+                   VerticalAlignment="Center"
+                   Margin="0,0,3,0"
+                   Source="../../Assets/save.png"
+                   Visibility="{Binding HasBeenEdited, Converter={StaticResource CollapsedIfFalse}}"
+                   MouseDown="SaveImage_OnMouseDown"/>
+            <TextBlock Name="HeaderTextBlock"/>
+            <Image Name="CrossImage" Height="13"
+                   Margin="3,0,0,0"
                    VerticalAlignment="Center" 
                    Source="../../Assets/cross.png"
-                   Visibility="{Binding HasBeenEdited, Converter={StaticResource CollapsedIfFalse}}"
+                   Visibility="{Binding CanClose, Converter={StaticResource CollapsedIfFalse}}"
                    MouseDown="CrossImage_OnMouseDown"/>
-            <TextBlock Name="HeaderTextBlock"/>
-            <Button Height="10" 
-                    Content="x"
-                    Visibility="{Binding CanClose, Converter={StaticResource CollapsedIfFalse}}"
-                    Click="ButtonBase_OnClick"/>
         </StackPanel>
     </TabItem.Header>
     <TextBox Name="TextFileBlock" ContextMenu="{x:Null}" 
