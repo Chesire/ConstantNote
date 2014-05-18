@@ -117,16 +117,25 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Application_Height" xml:space="preserve">
+  <data name="cmd_Save" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="str_Application_Height" xml:space="preserve">
     <value>Application Height</value>
   </data>
-  <data name="Application_Width" xml:space="preserve">
+  <data name="str_Application_Width" xml:space="preserve">
     <value>Application Width</value>
   </data>
-  <data name="Info" xml:space="preserve">
+  <data name="str_Info" xml:space="preserve">
     <value>To add  - Right click the tab bar and click "Add file" or "Add folder"
 To drag - Click and drag the primary tab
 To save  - Click out of the text box
 To close - Right click the tab bar and select close</value>
+  </data>
+  <data name="str_Set_State_Location" xml:space="preserve">
+    <value>Set Persistent State Location</value>
+  </data>
+  <data name="ttl_Settings" xml:space="preserve">
+    <value>Settings</value>
   </data>
 </root>

@@ -106,7 +106,7 @@ namespace ConstantNote.Classes.View
             if (string.IsNullOrEmpty(FilePath))
             {
                 TextFileBlock.IsHitTestVisible = false;
-                TextFileBlock.Text = MainResource.Info;
+                TextFileBlock.Text = MainResource.str_Info;
                 HasBeenEdited = false;
                 CanClose = false;
                 return;
