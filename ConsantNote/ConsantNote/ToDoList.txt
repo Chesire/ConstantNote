@@ -11,3 +11,4 @@ Create a Wix installer so the application can be installed -
 Possibilities:
 	Make it non minimizable
 	Make it possible to hide text. If below a tag (such as <ignore/>)
+	Add exclusion file so that when you add a folder it ignores the file extentions that was put into it
